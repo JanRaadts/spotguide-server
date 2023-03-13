@@ -4,9 +4,13 @@ const mongoose = require('mongoose')
 
 const Surfspot = require('./models/surfspot')
 
+require('dotenv').config();
+
+const mongoUri = process.env.mongoCode
+
 const app = express();
 
-mongoose.connect("mongodb+srv://janraadts:XmlLKsEpQrgpDY5M@surfspots.pancwyp.mongodb.net/spotguide?retryWrites=true&w=majority")
+mongoose.connect(mongoUri)
 .then(()=>{
     console.log('connected to db')
 }).catch(()=>{
