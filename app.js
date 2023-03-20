@@ -38,10 +38,11 @@ app.post('api/surfspots', (req, res, next)=> {
 
 app.put('api/surfspots/:id', (req, res, next)=> {
     const id = req.query._id;
-    Surfspot.findByIdAndUpdate(req.params._id), req.body, {
-        new: true,
-        runVaidator: true
-    }
+    Surfspot.findByIdAndUpdate(
+        id,
+        { comments: req.body.comments },
+        { returnDocument: "after" }
+      )
     .then(documents => {
         res.status(200).json(documents);
         console.log('successful fetch')
