@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
-const Surfspot = require('./models/surfspot')
+const Surfspot = require('./models/surfspot');
+const surfspot = require('./models/surfspot');
 
 require('dotenv').config();
 
@@ -27,7 +28,7 @@ res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT, OP
 next();
 });
 
-app.post('api/surfspots', (req, res, next)=> {
+app.post('/api/surfspots', (req, res, next)=> {
     const surfspot = new Surfspot(req.body)
     console.log(surfspot)
     surfspot.save()
@@ -36,8 +37,8 @@ app.post('api/surfspots', (req, res, next)=> {
     })
 })
 
-app.put('api/surfspots/:id', (req, res, next)=> {
-    const id = req.query._id;
+app.put('/api/surfspots/:_id', async (req, res, next)=> {
+    const id = req.body._id;
     Surfspot.findByIdAndUpdate(
         id,
         { comments: req.body.comments },
@@ -45,10 +46,10 @@ app.put('api/surfspots/:id', (req, res, next)=> {
       )
     .then(documents => {
         res.status(200).json(documents);
-        console.log('successful fetch')
+        console.log('successful put', documents)
     })
     .catch(()=>{
-        console.log('fetch failed')
+        console.log('put failed')
     })
 
 
